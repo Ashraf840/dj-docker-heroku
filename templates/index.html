@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+</head>
+<body>
+    
+    <h1>Homepage</h1>
+
+    <h4>CI/CD is being tested using this app.</h4>
+
+    <ul>
+        <li>Heroku</li>
+        <li>GitHub</li>
+    </ul>
+
+    <hr>
+
+    <h3>Procedure</h3>
+    <ol>
+        <li>Create a sample Django app.</li>
+        <li>Create a "requirements.txt" file inside the app's WD.</li>
+        <li>Create a "Dockerfile" inside the app's WD. <br/>
+            <ul>
+                <li>Choose a OS image: <b>FROM python:3.8-slim-buster</b> </li>
+                <li>Define default WD: <b>WORKDIR /app</b> </li>
+                <li>Define a path for virtual env: <b>ENV VIRTUAL_ENV=/opt/venv</b> </li>
+                <li>Create virtual env inside the path by running the cmd: <b>RUN python3 -m venv $VIRTUAL_ENV</b> </li>
+                <li>Activate virtual env: <b>ENV PATH="$VIRTUAL_ENV/bin:$PATH"</b> </li>
+                <li>Copy the "requirements.txt" file inside the WD of docker-image: <b>COPY requirements.txt .</b> </li>
+                <li>Install the required packages: <b>RUN pip install -r requirements.txt</b> </li>
+                <li>Copy the other files inside the docker-image: <b>COPY . .</b> </li>
+                <li>Run the cmd to run the Dj app inside the Docker container: <b>CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]</b> </li>
+            </ul>
+        </li>
+        <li>Create a new app inside our Heroku account.</li>
+        <li>Initialize an empty git-repo inside the project's WD.</li>
+        <li>Create "Procfile" inside the project's WD.</li>
+    </ol>
+
+</body>
+</html>
