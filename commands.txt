@@ -1,0 +1,16 @@
+# Create a Docker image.
+    docker build -t imageName:tagName .
+[NB]: The following dot "." is mentioning the current WD of the Docker image
+# Create a Docker container.
+    docker run -p hostPort:containerPort imageName:tagName
+
+[Upload to dockerhub]
+# Create a new instance inside local-docker, which will later be uploaded to 'dockerhub'.
+    docker tag localDockerImage:tagName dockerhubUsername/newDockerImageName:tagName
+[NB]: Clone the docker image. Define the tagName as ":latest", since it'll be posted in dockerhub.
+# Upload the image to dockerhub.
+    docker push dockerhubUsername/newDockerImageName:tagName
+
+[Upload to heroku]
+# Modify the 'Dockerfile' cmd at the bottom prior to upload the dockerized app into Heroku.
+    CMD gunicorn core.wsgi:application --bind 0.0.0.0:$PORT

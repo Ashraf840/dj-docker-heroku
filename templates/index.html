@@ -10,11 +10,15 @@
     
     <h1>Homepage</h1>
 
-    <h4>CI/CD is being tested using this app.</h4>
+    <h4>Experimenting CI/CD using this app.</h4>
+
+    <h5> YT Channel: <b> Very Academy </b> </h5>
+    <h5> YT Video: <b> https://www.youtube.com/watch?v=Oy71OgKZbOQ </b> </h5>
 
     <ul>
+        <li>Django</li>
+        <li>Docker</li>
         <li>Heroku</li>
-        <li>GitHub</li>
     </ul>
 
     <hr>
@@ -23,7 +27,14 @@
     <ol>
         <li>Create a sample Django app.</li>
         <li>Create a "requirements.txt" file inside the app's WD.</li>
-        <li>Create a "Dockerfile" inside the app's WD. <br/>
+        <li> <b>[Setup Environment Variables]</b>: Install a package called "django-environ" to fetch the environment variables.</li>
+        <li> <b>[Settings Granularisation]</b>: Create a "settings" directory as well as a file. </li>
+        <li>Setup environment varaibles in a file called ".env" inside the settings-folder of the project's settings-directory & write the sensitive infos inside that file.</li>
+        
+        <li>Install "gunicorn" & update the "requirements.txt" file.
+            <small>The "requirements.txt" file will aid Heroku to conside it as a python/django app </small>
+        </li>
+        <li>Create a "Dockerfile" inside the app's WD (basically, we're making a Operating System). <br/>   
             <ul>
                 <li>Choose a OS image: <b>FROM python:3.8-slim-buster</b> </li>
                 <li>Define default WD: <b>WORKDIR /app</b> </li>
@@ -36,12 +47,44 @@
                 <li>Run the cmd to run the Dj app inside the Docker container: <b>CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]</b> </li>
             </ul>
         </li>
-        <li>Create a new app inside our Heroku account.</li>
-        <li>Initialize an empty git-repo inside the project's WD.</li>
-        <li>Install "gunicorn" & update the "requirements.txt" file.
-            <small>The "requirements.txt" file will aid Heroku to conside it as a pytho/django app </small>
+
+        <li>
+            <b> Upload the Docker image to dockerhub </b>
+            <ul>
+                <li> Login to Docker through the terminal. <br>
+                    &emsp; <b> docker login </b>
+                </li>
+                <li> Create a new instance inside local-docker, which will later be uploaded to 'dockerhub'. <br>
+                    &emsp; <b> docker tag localDockerImage:tagName dockerhubUsername/newDockerImageName:tagName </b>
+                </li>
+                <li> Upload the image to dockerhub. <br>
+                    &emsp; <b> docker push dockerhubUsername/newDockerImageName:tagName </b>
+                </li>
+            </ul>
         </li>
-        <li>Create "Procfile" inside the project's WD.</li>
+
+        <li>
+            <b> Upload the Docker image to Heroku </b>
+            <ul>
+                <li> Modify the 'Dockerfile' cmd at the bottom prior to upload the dockerized app into Heroku. <br>
+                    &emsp; <b> CMD gunicorn core.wsgi:application --bind 0.0.0.0:$PORT </b>
+                </li>
+                <li> Put asterisk ("*") in the ALLOWED_HOST section. Thus the Dj-app allows Heroku to access. </li>
+                <li> Login to Heroku Container through terminal. <br>
+                    &emsp; <b> heroku container:login </b>
+                </li>
+                <li> Create a new heroku app. <br>
+                    &emsp; <b> heroku create appName </b>
+                </li>
+                <li> Redirect to the directory-path where the 'Dockerfile' exist (means, inside the dj-app WD). <br>
+                    Use the cmd to create a new docker-image which will simultaneously deploy this image to heroku container. <br>
+                    &emsp; <b> heroku container:push web -a=app-name </b>
+                </li>
+                <li> After deployment, we need to release this containerized app. <br>
+                    &emsp; <b> heroku container:release -a=app-name web </b>
+                </li>
+            </ul>
+        </li>
     </ol>
 
 </body>
